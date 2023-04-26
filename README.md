@@ -31,12 +31,3 @@ License
 This code is under the [Apache Licence v2](https://www.apache.org/licenses/LICENSE-2.0).
 
 See the `NOTICE.txt` file for required notices and attributions.
-
-Additional Resources
---------------------
-
-+ [Apache Commons Homepage](https://commons.apache.org/)
-+ [Apache Issue Tracker (JIRA)](https://issues.apache.org/jira/browse/CSV)
-+ [Apache Commons Slack Channel](https://the-asf.slack.com/archives/C60NVB8AD)
-+ [Apache Commons Twitter Account](https://twitter.com/ApacheCommons)
-+ `#apache-commons` IRC channel on `irc.freenode.org`
