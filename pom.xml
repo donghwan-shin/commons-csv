@@ -244,24 +244,6 @@
     </pluginManagement>
     <plugins>
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <testExcludes>
-            <testExclude>**/*Benchmark*</testExclude>
-          </testExcludes>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-             <descriptor>src/assembly/bin.xml</descriptor>
-             <descriptor>src/assembly/src.xml</descriptor>
-          </descriptors>
-          <tarLongFileMode>gnu</tarLongFileMode>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <executions>
@@ -313,85 +295,6 @@
 
     </plugins>
   </build>
-
-  <reporting>
-    <plugins>
-      <!-- Keep in sync with build config above -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <!-- We need to specify reportSets because 2.9.1 creates two reports -->
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>checkstyle</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <plugin>
-        <groupId>com.github.spotbugs</groupId>
-        <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>${commons.spotbugs.version}</version>
-        <configuration>
-          <excludeFilterFile>${basedir}/src/site/resources/spotbugs/spotbugs-exclude-filter.xml</excludeFilterFile>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>taglist-maven-plugin</artifactId>
-        <version>3.0.0</version>
-        <configuration>
-          <tagListOptions>
-            <tagClasses>
-              <tagClass>
-                <displayName>Needs Work</displayName>
-                <tags>
-                  <tag>
-                    <matchString>TODO</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>FIXME</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>XXX</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                </tags>
-              </tagClass>
-              <tagClass>
-                <displayName>Notable Markers</displayName>
-                <tags>
-                  <tag>
-                    <matchString>NOTE</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>NOPMD</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                  <tag>
-                    <matchString>NOSONAR</matchString>
-                    <matchType>exact</matchType>
-                  </tag>
-                </tags>
-              </tagClass>
-            </tagClasses>
-          </tagListOptions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </reporting>
 
   <profiles>
     <!-- Profile to build and run the benchmarks. Use 'mvn test -Pbenchmark', and add '-Dbenchmark=foo' to run only the foo benchmark -->
@@ -466,49 +369,6 @@
         <benchmark>org.apache</benchmark>
       </properties>
 
-      <build>
-        <plugins>
-          <!-- Enable the compilation of the benchmarks -->
-          <plugin>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>${commons.compiler.version}</version>
-            <configuration combine.self="override">
-              <testIncludes>
-                <testInclude>**/*</testInclude>
-              </testIncludes>
-            </configuration>
-          </plugin>
-
-          <!-- Hook the benchmarks to the test phase -->
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>benchmark</id>
-                <phase>test</phase>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <configuration>
-                  <classpathScope>test</classpathScope>
-                  <executable>java</executable>
-                  <arguments>
-                    <argument>-classpath</argument>
-                    <classpath/>
-                    <argument>org.openjdk.jmh.Main</argument>
-                    <argument>-rf</argument>
-                    <argument>json</argument>
-                    <argument>-rff</argument>
-                    <argument>target/jmh-result.json</argument>
-                    <argument>${benchmark}</argument>
-                  </arguments>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
     </profile>
 
      <profile>
